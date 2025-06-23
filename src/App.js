@@ -1,10 +1,12 @@
+import { Route, Routes } from 'react-router'
+
 import LoginPage from './LoginPage'
 
 function App() {
     return (
-        <div>
-            <LoginPage />
-        </div>
+        <Routes>
+            <Route path="/" element={<LoginPage />} />
+        </Routes>
     )
 }
 
