@@ -1,12 +1,27 @@
+import { ReactComponent as Logo } from './logo.svg'
+
 function LoginPage() {
     return (
         <div>
-            <h2>Login</h2>
-            <input type="text" placeholder="Username" />
-            <br />
-            <input type="password" placeholder="Password" />
-            <br />
-            <button>Login</button>
+            <form>
+                <input
+                    type="text"
+                    autoComplete="username"
+                    placeholder="Username"
+                />
+                <input
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="Password"
+                />
+                <button type="button">
+                    <span> Log In</span>
+                </button>
+            </form>
+            <div>
+                <Logo />
+                <span>ThinkTalk</span>
+            </div>
         </div>
     )
 }
