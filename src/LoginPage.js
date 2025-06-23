@@ -1,6 +1,14 @@
+import { useNavigate } from 'react-router'
+
 import { ReactComponent as Logo } from './logo.svg'
 
 function LoginPage() {
+    const navigate = useNavigate()
+
+    const logIn = () => {
+        navigate('/landing')
+    }
+
     return (
         <div>
             <form>
@@ -14,7 +22,7 @@ function LoginPage() {
                     autoComplete="current-password"
                     placeholder="Password"
                 />
-                <button type="button">
+                <button type="button" onClick={logIn}>
                     <span> Log In</span>
                 </button>
             </form>
