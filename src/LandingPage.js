@@ -1,12 +1,20 @@
+import { useNavigate } from 'react-router'
+
 import { ReactComponent as Logo } from './logo.svg'
 
 function LandingPage() {
+    const navigate = useNavigate()
+
+    const logOut = () => {
+        navigate('/')
+    }
+
     return (
         <div>
             <div>
                 <Logo />
                 <span>ThinkTalk</span>
-                <button type="button">
+                <button type="button" onClick={logOut}>
                     <span>Log Out</span>
                 </button>
             </div>
