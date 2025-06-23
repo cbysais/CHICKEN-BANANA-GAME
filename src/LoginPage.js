@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { ReactComponent as Logo } from './logo.svg'
@@ -9,6 +10,9 @@ function LoginPage() {
         navigate('/landing')
     }
 
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
     return (
         <div>
             <form>
@@ -16,11 +20,19 @@ function LoginPage() {
                     type="text"
                     autoComplete="username"
                     placeholder="Username"
+                    value={username}
+                    onChange={(e) => {
+                        setUsername(e.target.value)
+                    }}
                 />
                 <input
                     type="password"
                     autoComplete="current-password"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => {
+                        setPassword(e.target.value)
+                    }}
                 />
                 <button type="button" onClick={logIn}>
                     <span> Log In</span>
