@@ -1,15 +1,8 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
 
 import { ReactComponent as Logo } from './logo.svg'
 
 function LoginPage() {
-    const navigate = useNavigate()
-
-    const logIn = () => {
-        navigate('/')
-    }
-
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -34,7 +27,7 @@ function LoginPage() {
                         setPassword(e.target.value)
                     }}
                 />
-                <button type="button" onClick={logIn}>
+                <button type="button">
                     <span> Log In</span>
                 </button>
             </form>
