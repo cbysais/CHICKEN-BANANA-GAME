@@ -6,7 +6,7 @@ function LandingPage() {
     const navigate = useNavigate()
 
     const logOut = () => {
-        navigate('/')
+        navigate('/login')
     }
 
     return (
