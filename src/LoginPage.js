@@ -8,6 +8,12 @@ function LoginPage() {
 
     return (
         <div className="flex h-screen w-screen flex-col items-center justify-center gap-y-8 bg-gradient-to-bl from-white to-blue-50 px-16 md:flex-row-reverse md:gap-x-16">
+            <div className="flex flex-col items-center">
+                <Logo className="h-32 w-32 fill-blue-500" />
+                <span className="select-none text-2xl font-black text-blue-500">
+                    ThinkTalk
+                </span>
+            </div>
             <form className="flex h-fit w-96 flex-col gap-y-4 rounded-2xl bg-white px-4 py-4 shadow-md">
                 <input
                     className="w-full rounded-2xl border border-blue-300 bg-white px-2 py-2"
@@ -38,12 +44,6 @@ function LoginPage() {
                     </span>
                 </button>
             </form>
-            <div className="flex flex-col items-center">
-                <Logo className="h-32 w-32 fill-blue-500" />
-                <span className="select-none text-2xl font-black text-blue-500">
-                    ThinkTalk
-                </span>
-            </div>
         </div>
     )
 }
