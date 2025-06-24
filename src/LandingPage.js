@@ -22,13 +22,13 @@ function LandingPage() {
                     onClick={logIn}
                 >
                     <span className="text-2xl font-bold text-blue-500 group-hover:underline">
-                        Log In
+                        LOG IN
                     </span>
                 </button>
             </div>
             <div className="flex h-full w-full bg-gradient-to-tr from-white to-blue-50 px-8 py-8">
                 <span className="bg-gradient-to-tr from-blue-300 to-blue-500 bg-clip-text text-9xl font-bold text-transparent">
-                    A social media platform where you think before you talk.
+                    A social media platform where you THINK before you TALK.
                 </span>
             </div>
         </div>
