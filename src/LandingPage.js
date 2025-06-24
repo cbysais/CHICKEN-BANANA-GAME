@@ -17,7 +17,7 @@ function LandingPage() {
                     ThinkTalk
                 </span>
                 <button
-                    className="group rounded-full bg-blue-50 px-6 py-2"
+                    className="group rounded-2xl bg-blue-50 px-6 py-2"
                     type="button"
                     onClick={logIn}
                 >
