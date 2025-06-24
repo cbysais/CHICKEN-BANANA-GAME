@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router'
 
 import { ReactComponent as Logo } from './logo.svg'
-import woman from './woman.jpg'
 
 function LandingPage() {
     const navigate = useNavigate()
