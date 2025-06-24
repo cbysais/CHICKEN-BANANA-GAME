@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from './logo.svg'
 function LandingPage() {
     const navigate = useNavigate()
 
-    const logOut = () => {
+    const logIn = () => {
         navigate('/login')
     }
 
@@ -14,7 +14,7 @@ function LandingPage() {
             <div>
                 <Logo />
                 <span>ThinkTalk</span>
-                <button type="button" onClick={logOut}>
+                <button type="button" onClick={logIn}>
                     <span>Log Out</span>
                 </button>
             </div>
