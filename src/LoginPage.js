@@ -7,7 +7,7 @@ function LoginPage() {
     const navigate = useNavigate()
 
     const logIn = () => {
-        navigate('/landing')
+        navigate('/')
     }
 
     const [username, setUsername] = useState('')
