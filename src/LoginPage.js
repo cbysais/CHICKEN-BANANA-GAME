@@ -34,7 +34,7 @@ function LoginPage() {
                     type="button"
                 >
                     <span className="text-2xl font-bold text-blue-50">
-                        Log In
+                        LOG IN
                     </span>
                 </button>
             </form>
