@@ -15,7 +15,7 @@ function LandingPage() {
                 <Logo />
                 <span>ThinkTalk</span>
                 <button type="button" onClick={logIn}>
-                    <span>Log Out</span>
+                    <span>Log In</span>
                 </button>
             </div>
             <div>
