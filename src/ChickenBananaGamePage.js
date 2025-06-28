@@ -57,8 +57,28 @@ function Square({ integer, index, onClick }) {
     )
 }
 
+function ChickenBananaGrid({ balancedRandomIntegers }) {
+    return (
+        <div className="grid h-fit w-fit grid-cols-6 grid-rows-6 gap-x-1 gap-y-1">
+            {balancedRandomIntegers.map((randomInteger, index) => (
+                <Square
+                    integer={randomInteger}
+                    index={index + 1}
+                    key={`square-${index + 1}`}
+                />
+            ))}
+        </div>
+    )
+}
+
 function ChickenBananaGameLayout({ balancedRandomIntegers }) {
-    return <></>
+    return (
+        <div className="flex h-screen w-screen items-center justify-center bg-blue-50">
+            <ChickenBananaGrid
+                balancedRandomIntegers={balancedRandomIntegers}
+            />
+        </div>
+    )
 }
 
 function ChickenBananaGamePage() {
