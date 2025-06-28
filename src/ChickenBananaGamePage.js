@@ -27,7 +27,7 @@ function createBalancedRandomIntegers(numberOfSquares) {
     return balancedRandomIntegers
 }
 
-function Square({ integer, index, onClick }) {
+function Square({ integer, index, onClick, disabled }) {
     const [clicked, setClicked] = useState(false)
 
     return (
@@ -41,6 +41,7 @@ function Square({ integer, index, onClick }) {
                     }
                 }
             }}
+            disabled={disabled}
         >
             {clicked ? (
                 integer === 0 ? (
@@ -57,14 +58,56 @@ function Square({ integer, index, onClick }) {
     )
 }
 
-function ChickenBananaGrid({ balancedRandomIntegers }) {
+function ChickenBananaGrid({
+    balancedRandomIntegers,
+    //
+    turn,
+    setTurn,
+    //
+    playerOneInteger,
+    playerOneCorrectClicks,
+    setPlayerOneCorrectClicks,
+    playerOneFailed,
+    setPlayerOneFailed,
+    //
+    playerTwoInteger,
+    playerTwoCorrectClicks,
+    setPlayerTwoCorrectClicks,
+    playerTwoFailed,
+    setPlayerTwoFailed,
+}) {
     return (
         <div className="grid h-fit w-fit grid-cols-6 grid-rows-6 gap-x-1 gap-y-1">
             {balancedRandomIntegers.map((randomInteger, index) => (
                 <Square
                     integer={randomInteger}
                     index={index + 1}
+                    onClick={() => {
+                        if (turn % 2 === 1) {
+                            // Player 1
+                            if (playerOneInteger === randomInteger) {
+                                setPlayerOneCorrectClicks(
+                                    playerOneCorrectClicks + 1
+                                )
+                            } else {
+                                setPlayerOneFailed(true)
+                            }
+                        } else {
+                            // Player 2
+                            if (playerTwoInteger === randomInteger) {
+                                setPlayerTwoCorrectClicks(
+                                    playerTwoCorrectClicks + 1
+                                )
+                            } else {
+                                setPlayerTwoFailed(true)
+                            }
+                        }
+
+                        setTurn(turn + 1)
+                    }}
+                    //
                     key={`square-${index + 1}`}
+                    disabled={playerOneFailed || playerTwoFailed}
                 />
             ))}
         </div>
@@ -99,13 +142,24 @@ function PlayerStats({ integer, correctClicks, possibleCorrectClicks }) {
 }
 
 function ChickenBananaGameLayout({ balancedRandomIntegers }) {
+    const [turn, setTurn] = useState(1)
+
+    const [playerOneInteger, setPlayerOneInteger] = useState(0)
+    const [playerTwoInteger, setPlayerTwoInteger] = useState(1)
+
+    const [playerOneCorrectClicks, setPlayerOneCorrectClicks] = useState(0)
+    const [playerTwoCorrectClicks, setPlayerTwoCorrectClicks] = useState(0)
+
+    const [playerOneFailed, setPlayerOneFailed] = useState(false)
+    const [playerTwoFailed, setPlayerTwoFailed] = useState(false)
+
     return (
         <div className="flex h-screen w-screen items-center justify-center bg-blue-50">
             <div className="flex h-full w-1/4 flex-col items-center justify-evenly">
                 <div />
                 <PlayerStats
-                    integer={0}
-                    correctClicks={0}
+                    integer={playerOneInteger}
+                    correctClicks={playerOneCorrectClicks}
                     possibleCorrectClicks={balancedRandomIntegers.length / 2}
                 />
                 <div />
@@ -118,6 +172,21 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
                 </span>
                 <ChickenBananaGrid
                     balancedRandomIntegers={balancedRandomIntegers}
+                    //
+                    turn={turn}
+                    setTurn={setTurn}
+                    //
+                    playerOneInteger={playerOneInteger}
+                    playerOneCorrectClicks={playerOneCorrectClicks}
+                    setPlayerOneCorrectClicks={setPlayerOneCorrectClicks}
+                    playerOneFailed={playerOneFailed}
+                    setPlayerOneFailed={setPlayerOneFailed}
+                    //
+                    playerTwoInteger={playerTwoInteger}
+                    playerTwoCorrectClicks={playerTwoCorrectClicks}
+                    setPlayerTwoCorrectClicks={setPlayerTwoCorrectClicks}
+                    playerTwoFailed={playerTwoFailed}
+                    setPlayerTwoFailed={setPlayerTwoFailed}
                 />
                 <div />
             </div>
@@ -125,8 +194,8 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
             <div className="flex h-full w-1/4 flex-col items-center justify-evenly">
                 <div />
                 <PlayerStats
-                    integer={1}
-                    correctClicks={0}
+                    integer={playerTwoInteger}
+                    correctClicks={playerTwoCorrectClicks}
                     possibleCorrectClicks={balancedRandomIntegers.length / 2}
                 />
                 <div />
