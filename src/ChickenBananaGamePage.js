@@ -1,4 +1,6 @@
 function createBalancedRandomIntegers(numberOfSquares) {
+    // Returns an array of randomly shuffled integers between 0 and 1.
+
     // numberOfSquares must be even.
     const zeroes = Array(numberOfSquares / 2).fill(0)
     const ones = Array(numberOfSquares / 2).fill(1)
