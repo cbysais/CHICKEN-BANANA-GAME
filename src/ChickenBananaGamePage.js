@@ -74,9 +74,16 @@ function ChickenBananaGrid({ balancedRandomIntegers }) {
 function ChickenBananaGameLayout({ balancedRandomIntegers }) {
     return (
         <div className="flex h-screen w-screen items-center justify-center bg-blue-50">
-            <ChickenBananaGrid
-                balancedRandomIntegers={balancedRandomIntegers}
-            />
+            <div className="flex h-full flex-col items-center justify-evenly">
+                <span className="select-none text-5xl font-black text-blue-500">
+                    <span className="text-orange-500">Chicken</span>{' '}
+                    <span className="text-yellow-500">Banana</span> Game
+                </span>
+                <ChickenBananaGrid
+                    balancedRandomIntegers={balancedRandomIntegers}
+                />
+                <div />
+            </div>
         </div>
     )
 }
