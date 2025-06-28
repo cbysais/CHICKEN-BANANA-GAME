@@ -67,14 +67,14 @@ function ChickenBananaGrid({
     playerOneInteger,
     playerOneCorrectClicks,
     setPlayerOneCorrectClicks,
-    playerOneFailed,
-    setPlayerOneFailed,
+    playerOneStatus,
+    setPlayerOneStatus,
     //
     playerTwoInteger,
     playerTwoCorrectClicks,
     setPlayerTwoCorrectClicks,
-    playerTwoFailed,
-    setPlayerTwoFailed,
+    playerTwoStatus,
+    setPlayerTwoStatus,
 }) {
     return (
         <div className="grid h-fit w-fit grid-cols-6 grid-rows-6 gap-x-1 gap-y-1">
@@ -86,11 +86,20 @@ function ChickenBananaGrid({
                         if (turn % 2 === 1) {
                             // Player 1
                             if (playerOneInteger === randomInteger) {
+                                if (
+                                    playerOneCorrectClicks + 1 ===
+                                    balancedRandomIntegers.length / 2
+                                ) {
+                                    setPlayerOneStatus('draws')
+                                    setPlayerTwoStatus('draws')
+                                }
+
                                 setPlayerOneCorrectClicks(
                                     playerOneCorrectClicks + 1
                                 )
                             } else {
-                                setPlayerOneFailed(true)
+                                setPlayerOneStatus('loses')
+                                setPlayerTwoStatus('wins')
                             }
                         } else {
                             // Player 2
@@ -99,7 +108,8 @@ function ChickenBananaGrid({
                                     playerTwoCorrectClicks + 1
                                 )
                             } else {
-                                setPlayerTwoFailed(true)
+                                setPlayerOneStatus('wins')
+                                setPlayerTwoStatus('loses')
                             }
                         }
 
@@ -107,20 +117,43 @@ function ChickenBananaGrid({
                     }}
                     //
                     key={`square-${index + 1}`}
-                    disabled={playerOneFailed || playerTwoFailed}
+                    disabled={
+                        playerOneStatus !== 'ongoing' &&
+                        playerTwoStatus !== 'ongoing'
+                    }
                 />
             ))}
         </div>
     )
 }
 
-function PlayerStats({ integer, correctClicks, possibleCorrectClicks }) {
+function PlayerStats({
+    integer,
+    correctClicks,
+    possibleCorrectClicks,
+    playerTurn,
+    playerStatus,
+}) {
     return (
-        <div className="flex flex-col items-center justify-center gap-y-16">
+        <div className="flex h-full w-1/4 flex-col items-center justify-center gap-y-16">
             <span
                 className={`select-none text-center text-5xl font-black ${integer === 0 ? 'text-orange-500' : 'text-yellow-500'}`}
             >
                 Player {integer + 1}
+                {playerStatus === 'ongoing' ? (
+                    <span className={`${!playerTurn && 'invisible'}`}>
+                        's
+                        <br />
+                        <span className="text-blue-500"> Turn</span>
+                    </span>
+                ) : (
+                    <span
+                        className={`capitalize ${playerStatus === 'wins' && 'text-green-500'} ${playerStatus === 'loses' && 'text-red-500'} ${playerStatus === 'draws' && 'text-gray-500'}`}
+                    >
+                        <br />
+                        {playerStatus}
+                    </span>
+                )}
             </span>
 
             <div
@@ -132,6 +165,7 @@ function PlayerStats({ integer, correctClicks, possibleCorrectClicks }) {
                     <BananaSVG className="size-full fill-yellow-500" />
                 )}
             </div>
+
             <span
                 className={`select-none text-center text-5xl font-black ${integer === 0 ? 'text-orange-500' : 'text-yellow-500'}`}
             >
@@ -150,20 +184,21 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
     const [playerOneCorrectClicks, setPlayerOneCorrectClicks] = useState(0)
     const [playerTwoCorrectClicks, setPlayerTwoCorrectClicks] = useState(0)
 
-    const [playerOneFailed, setPlayerOneFailed] = useState(false)
-    const [playerTwoFailed, setPlayerTwoFailed] = useState(false)
+    // Status = ongoing, loses, draws, wins
+    const [playerOneStatus, setPlayerOneStatus] = useState('ongoing')
+    const [playerTwoStatus, setPlayerTwoStatus] = useState('ongoing')
 
     return (
-        <div className="flex h-screen w-screen items-center justify-center bg-blue-50">
-            <div className="flex h-full w-1/4 flex-col items-center justify-evenly">
-                <div />
-                <PlayerStats
-                    integer={playerOneInteger}
-                    correctClicks={playerOneCorrectClicks}
-                    possibleCorrectClicks={balancedRandomIntegers.length / 2}
-                />
-                <div />
-            </div>
+        <div
+            className={`flex h-screen w-screen items-center justify-center ${turn === 1 ? 'bg-blue-50' : turn % 2 === 1 ? 'bg-orange-200' : 'bg-yellow-200'}`}
+        >
+            <PlayerStats
+                integer={playerOneInteger}
+                correctClicks={playerOneCorrectClicks}
+                possibleCorrectClicks={balancedRandomIntegers.length / 2}
+                playerTurn={turn % 2 === 1}
+                playerStatus={playerOneStatus}
+            />
 
             <div className="flex h-full flex-col items-center justify-evenly">
                 <span className="select-none text-5xl font-black text-blue-500">
@@ -179,27 +214,25 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
                     playerOneInteger={playerOneInteger}
                     playerOneCorrectClicks={playerOneCorrectClicks}
                     setPlayerOneCorrectClicks={setPlayerOneCorrectClicks}
-                    playerOneFailed={playerOneFailed}
-                    setPlayerOneFailed={setPlayerOneFailed}
+                    playerOneStatus={playerOneStatus}
+                    setPlayerOneStatus={setPlayerOneStatus}
                     //
                     playerTwoInteger={playerTwoInteger}
                     playerTwoCorrectClicks={playerTwoCorrectClicks}
                     setPlayerTwoCorrectClicks={setPlayerTwoCorrectClicks}
-                    playerTwoFailed={playerTwoFailed}
-                    setPlayerTwoFailed={setPlayerTwoFailed}
+                    playerTwoStatus={playerTwoStatus}
+                    setPlayerTwoStatus={setPlayerTwoStatus}
                 />
                 <div />
             </div>
 
-            <div className="flex h-full w-1/4 flex-col items-center justify-evenly">
-                <div />
-                <PlayerStats
-                    integer={playerTwoInteger}
-                    correctClicks={playerTwoCorrectClicks}
-                    possibleCorrectClicks={balancedRandomIntegers.length / 2}
-                />
-                <div />
-            </div>
+            <PlayerStats
+                integer={playerTwoInteger}
+                correctClicks={playerTwoCorrectClicks}
+                possibleCorrectClicks={balancedRandomIntegers.length / 2}
+                playerTurn={turn % 2 === 0}
+                playerStatus={playerTwoStatus}
+            />
         </div>
     )
 }
