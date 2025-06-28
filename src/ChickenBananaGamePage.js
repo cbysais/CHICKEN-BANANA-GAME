@@ -57,6 +57,10 @@ function Square({ integer, index, onClick }) {
     )
 }
 
+function ChickenBananaGameLayout({ balancedRandomIntegers }) {
+    return <></>
+}
+
 function ChickenBananaGamePage() {
     // inputtedNumberOfSquares must be even.
     const inputtedNumberOfSquares = 6 * 6
@@ -64,7 +68,11 @@ function ChickenBananaGamePage() {
     const numberOfSquares = Math.floor(inputtedNumberOfSquares / 2) * 2
     const balancedRandomIntegers = createBalancedRandomIntegers(numberOfSquares)
 
-    return <></>
+    return (
+        <ChickenBananaGameLayout
+            balancedRandomIntegers={balancedRandomIntegers}
+        />
+    )
 }
 
 export default ChickenBananaGamePage
