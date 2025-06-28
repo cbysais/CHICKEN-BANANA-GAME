@@ -13,6 +13,7 @@
         "editor.quickSuggestions": {
             "strings": "on",
         },
+        "svg.preview.background": "transparent",
     },
     "extensions": {
         "recommendations": [
