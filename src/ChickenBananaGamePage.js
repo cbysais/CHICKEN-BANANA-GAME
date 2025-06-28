@@ -71,9 +71,46 @@ function ChickenBananaGrid({ balancedRandomIntegers }) {
     )
 }
 
+function PlayerStats({ integer, correctClicks, possibleCorrectClicks }) {
+    return (
+        <div className="flex flex-col items-center justify-center gap-y-16">
+            <span
+                className={`select-none text-center text-5xl font-black ${integer === 0 ? 'text-orange-500' : 'text-yellow-500'}`}
+            >
+                Player {integer + 1}
+            </span>
+
+            <div
+                className={`size-24 rounded-2xl p-2 py-2 shadow-2xl ${integer === 0 ? 'bg-orange-50' : 'bg-yellow-50'}`}
+            >
+                {integer === 0 ? (
+                    <ChickenSVG className="size-full fill-orange-500" />
+                ) : (
+                    <BananaSVG className="size-full fill-yellow-500" />
+                )}
+            </div>
+            <span
+                className={`select-none text-center text-5xl font-black ${integer === 0 ? 'text-orange-500' : 'text-yellow-500'}`}
+            >
+                {((correctClicks / possibleCorrectClicks) * 100).toFixed(2)}%
+            </span>
+        </div>
+    )
+}
+
 function ChickenBananaGameLayout({ balancedRandomIntegers }) {
     return (
         <div className="flex h-screen w-screen items-center justify-center bg-blue-50">
+            <div className="flex h-full w-1/4 flex-col items-center justify-evenly">
+                <div />
+                <PlayerStats
+                    integer={0}
+                    correctClicks={0}
+                    possibleCorrectClicks={balancedRandomIntegers.length / 2}
+                />
+                <div />
+            </div>
+
             <div className="flex h-full flex-col items-center justify-evenly">
                 <span className="select-none text-5xl font-black text-blue-500">
                     <span className="text-orange-500">Chicken</span>{' '}
@@ -81,6 +118,16 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
                 </span>
                 <ChickenBananaGrid
                     balancedRandomIntegers={balancedRandomIntegers}
+                />
+                <div />
+            </div>
+
+            <div className="flex h-full w-1/4 flex-col items-center justify-evenly">
+                <div />
+                <PlayerStats
+                    integer={1}
+                    correctClicks={0}
+                    possibleCorrectClicks={balancedRandomIntegers.length / 2}
                 />
                 <div />
             </div>
