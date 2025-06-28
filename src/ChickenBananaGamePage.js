@@ -128,6 +128,7 @@ function ChickenBananaGrid({
 }
 
 function PlayerStats({
+    number,
     integer,
     correctClicks,
     possibleCorrectClicks,
@@ -139,7 +140,7 @@ function PlayerStats({
             <span
                 className={`select-none text-center text-5xl font-black ${integer === 0 ? 'text-orange-500' : 'text-yellow-500'}`}
             >
-                Player {integer + 1}
+                Player {number}
                 {playerStatus === 'ongoing' ? (
                     <span className={`${!playerTurn && 'invisible'}`}>
                         's
@@ -190,9 +191,10 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
 
     return (
         <div
-            className={`flex h-screen w-screen items-center justify-center ${turn === 1 ? 'bg-blue-50' : turn % 2 === 1 ? 'bg-orange-200' : 'bg-yellow-200'}`}
+            className={`flex h-screen w-screen items-center justify-center ${turn === 1 ? 'bg-blue-50' : turn % 2 === 1 ? `${playerOneInteger === 0 ? 'bg-orange-200' : 'bg-yellow-200'}` : `${playerTwoInteger === 1 ? 'bg-yellow-200' : 'bg-orange-200'}`}`}
         >
             <PlayerStats
+                number={1}
                 integer={playerOneInteger}
                 correctClicks={playerOneCorrectClicks}
                 possibleCorrectClicks={balancedRandomIntegers.length / 2}
@@ -223,10 +225,23 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
                     playerTwoStatus={playerTwoStatus}
                     setPlayerTwoStatus={setPlayerTwoStatus}
                 />
+                <button
+                    className={`rounded-2xl bg-blue-500 px-2 py-2 hover:bg-blue-600`}
+                    type="button"
+                    onClick={() => {
+                        setPlayerOneInteger(playerTwoInteger)
+                        setPlayerTwoInteger(playerOneInteger)
+                    }}
+                >
+                    <span className="select-none text-5xl font-black text-blue-50">
+                        Switch Sides
+                    </span>
+                </button>
                 <div />
             </div>
 
             <PlayerStats
+                number={2}
                 integer={playerTwoInteger}
                 correctClicks={playerTwoCorrectClicks}
                 possibleCorrectClicks={balancedRandomIntegers.length / 2}
