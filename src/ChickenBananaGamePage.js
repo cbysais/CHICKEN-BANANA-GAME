@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ReactComponent as ChickenSVG } from './chicken.svg'
 import { ReactComponent as BananaSVG } from './banana.svg'
@@ -27,8 +27,12 @@ function createBalancedRandomIntegers(numberOfSquares) {
     return balancedRandomIntegers
 }
 
-function Square({ integer, index, onClick, disabled }) {
+function Square({ integer, index, onClick, disabled, resetClicks }) {
     const [clicked, setClicked] = useState(false)
+
+    useEffect(() => {
+        setClicked(false)
+    }, [resetClicks])
 
     return (
         <button
@@ -60,6 +64,7 @@ function Square({ integer, index, onClick, disabled }) {
 
 function ChickenBananaGrid({
     balancedRandomIntegers,
+    resetClicks,
     //
     turn,
     setTurn,
@@ -121,6 +126,7 @@ function ChickenBananaGrid({
                         playerOneStatus !== 'ongoing' &&
                         playerTwoStatus !== 'ongoing'
                     }
+                    resetClicks={resetClicks}
                 />
             ))}
         </div>
@@ -176,8 +182,13 @@ function PlayerStats({
     )
 }
 
-function ChickenBananaGameLayout({ balancedRandomIntegers }) {
+function ChickenBananaGameLayout({
+    balancedRandomIntegers,
+    setBalancedRandomIntegers,
+    numberOfSquares,
+}) {
     const [turn, setTurn] = useState(1)
+    const [resetClicks, setResetClicks] = useState(0)
 
     const [playerOneInteger, setPlayerOneInteger] = useState(0)
     const [playerTwoInteger, setPlayerTwoInteger] = useState(1)
@@ -209,6 +220,7 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
                 </span>
                 <ChickenBananaGrid
                     balancedRandomIntegers={balancedRandomIntegers}
+                    resetClicks={resetClicks}
                     //
                     turn={turn}
                     setTurn={setTurn}
@@ -226,15 +238,31 @@ function ChickenBananaGameLayout({ balancedRandomIntegers }) {
                     setPlayerTwoStatus={setPlayerTwoStatus}
                 />
                 <button
-                    className={`rounded-2xl bg-blue-500 px-2 py-2 hover:bg-blue-600`}
+                    className={`rounded-2xl px-2 py-2 ${turn === 1 ? `${playerOneInteger === 0 ? 'bg-gradient-to-r' : 'bg-gradient-to-l'} from-orange-500 to-yellow-500 hover:from-orange-600 hover:to-yellow-600` : `${playerOneStatus === 'ongoing' && playerTwoStatus === 'ongoing' && 'invisible'} bg-gray-500 hover:bg-gray-600`}`}
                     type="button"
                     onClick={() => {
-                        setPlayerOneInteger(playerTwoInteger)
-                        setPlayerTwoInteger(playerOneInteger)
+                        if (turn === 1) {
+                            // Switch sides.
+                            setPlayerOneInteger(playerTwoInteger)
+                            setPlayerTwoInteger(playerOneInteger)
+                        } else {
+                            // Reset game.
+                            setBalancedRandomIntegers([
+                                ...createBalancedRandomIntegers(
+                                    numberOfSquares
+                                ),
+                            ])
+                            setResetClicks(resetClicks + 1)
+                            setTurn(1)
+                            setPlayerOneCorrectClicks(0)
+                            setPlayerTwoCorrectClicks(0)
+                            setPlayerOneStatus('ongoing')
+                            setPlayerTwoStatus('ongoing')
+                        }
                     }}
                 >
                     <span className="select-none text-5xl font-black text-blue-50">
-                        Switch Sides
+                        {turn === 1 ? 'Switch Sides' : 'Reset Game'}
                     </span>
                 </button>
                 <div />
@@ -257,11 +285,15 @@ function ChickenBananaGamePage() {
     const inputtedNumberOfSquares = 6 * 6
     // numberOfSquares is created as a fail-safe for odd inputtedNumberOfSquares.
     const numberOfSquares = Math.floor(inputtedNumberOfSquares / 2) * 2
-    const balancedRandomIntegers = createBalancedRandomIntegers(numberOfSquares)
+    const [balancedRandomIntegers, setBalancedRandomIntegers] = useState(
+        createBalancedRandomIntegers(numberOfSquares)
+    )
 
     return (
         <ChickenBananaGameLayout
             balancedRandomIntegers={balancedRandomIntegers}
+            setBalancedRandomIntegers={setBalancedRandomIntegers}
+            numberOfSquares={numberOfSquares}
         />
     )
 }
