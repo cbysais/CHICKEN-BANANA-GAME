@@ -44,7 +44,7 @@ function Square({
 
     return (
         <button
-            className={`size-24 rounded-2xl p-2 py-2 shadow-2xl ${clicked ? (integer === 0 ? 'bg-orange-50' : 'bg-yellow-50') : 'bg-blue-500'} ${clicked && `border-4 border-solid ${clickedBy === 0 ? 'border-orange-500' : 'border-yellow-500'}`}`}
+            className={`size-24 rounded-2xl p-2 py-2 shadow-2xl ${clicked ? (integer === 0 ? 'bg-orange-50' : 'bg-yellow-50') : disabled ? 'bg-gray-500' : 'bg-blue-500'} ${clicked && `border-4 border-solid ${clickedBy === 0 ? 'border-orange-500' : 'border-yellow-500'}`}`}
             onClick={() => {
                 if (!clicked) {
                     setClicked(true)
@@ -56,7 +56,7 @@ function Square({
             }}
             disabled={disabled}
         >
-            {clicked ? (
+            {clicked || disabled ? (
                 integer === 0 ? (
                     <ChickenSVG className="size-full fill-orange-500" />
                 ) : (
