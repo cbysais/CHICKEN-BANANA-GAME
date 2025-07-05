@@ -214,7 +214,7 @@ function ChickenBananaGameLayout({
             />
 
             <div className="flex h-full flex-col items-center justify-evenly">
-                <span className="select-none text-5xl font-black text-blue-500">
+                <span className="select-none text-center text-5xl font-black text-blue-500">
                     <span className="text-orange-500">Chicken</span>{' '}
                     <span className="text-yellow-500">Banana</span> Game
                 </span>
