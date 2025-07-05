@@ -214,7 +214,7 @@ function ChickenBananaGameLayout({
 
     return (
         <div
-            className={`flex h-screen w-screen items-center justify-center ${turn === 1 ? 'bg-blue-50' : turn % 2 === 1 ? `${playerOneInteger === 0 ? 'bg-orange-200' : 'bg-yellow-200'}` : `${playerTwoInteger === 1 ? 'bg-yellow-200' : 'bg-orange-200'}`}`}
+            className={`flex h-screen w-screen items-center justify-center ${playerOneStatus === 'draws' && playerTwoStatus === 'draws' ? 'bg-gray-200' : turn === 1 ? 'bg-blue-50' : turn % 2 === 1 ? `${playerOneInteger === 0 ? `${playerOneStatus !== 'loses' ? 'bg-orange-200' : 'bg-yellow-200'}` : `${playerOneStatus !== 'loses' ? 'bg-yellow-200' : 'bg-orange-200'}`}` : `${playerTwoInteger === 1 ? `${playerTwoStatus !== 'loses' ? 'bg-yellow-200' : 'bg-orange-200'}` : `${playerTwoStatus !== 'loses' ? 'bg-orange-200' : 'bg-yellow-200'}`}`}`}
         >
             <PlayerStats
                 number={1}
