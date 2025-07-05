@@ -27,8 +27,16 @@ function createBalancedRandomIntegers(numberOfSquares) {
     return balancedRandomIntegers
 }
 
-function Square({ integer, index, onClick, disabled, resetClicks }) {
+function Square({
+    currentPlayerInteger,
+    integer,
+    index,
+    onClick,
+    disabled,
+    resetClicks,
+}) {
     const [clicked, setClicked] = useState(false)
+    const [clickedBy, setClickedBy] = useState(undefined)
 
     useEffect(() => {
         setClicked(false)
@@ -36,12 +44,13 @@ function Square({ integer, index, onClick, disabled, resetClicks }) {
 
     return (
         <button
-            className={`size-24 rounded-2xl p-2 py-2 shadow-2xl ${clicked ? (integer === 0 ? 'bg-orange-50' : 'bg-yellow-50') : 'bg-blue-500'}`}
+            className={`size-24 rounded-2xl p-2 py-2 shadow-2xl ${clicked ? (integer === 0 ? 'bg-orange-50' : 'bg-yellow-50') : 'bg-blue-500'} ${clicked && `border-4 border-solid ${clickedBy === 0 ? 'border-orange-500' : 'border-yellow-500'}`}`}
             onClick={() => {
                 if (!clicked) {
                     setClicked(true)
                     if (onClick) {
                         onClick()
+                        setClickedBy(currentPlayerInteger)
                     }
                 }
             }}
@@ -85,6 +94,9 @@ function ChickenBananaGrid({
         <div className="grid h-fit w-fit grid-cols-6 grid-rows-6 gap-x-1 gap-y-1">
             {balancedRandomIntegers.map((randomInteger, index) => (
                 <Square
+                    currentPlayerInteger={
+                        turn % 2 === 1 ? playerOneInteger : playerTwoInteger
+                    }
                     integer={randomInteger}
                     index={index + 1}
                     onClick={() => {
