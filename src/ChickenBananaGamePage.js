@@ -130,7 +130,7 @@ function ChickenBananaGrid({
                             }
                         }
 
-                        setTurn(turn + 1)
+                        setTurn(turn + 2)
                     }}
                     //
                     key={`square-${index + 1}`}
